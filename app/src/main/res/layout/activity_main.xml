@@ -21,7 +21,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-medium"
+            android:fontFamily="@font/inter_18pt_black"
             android:text="TripBuddy"
             android:textSize="30sp"
             android:layout_gravity="center"/>
