@@ -2,4 +2,90 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="backgroundLightGrey">#e2e8f0</color>
+
+    <!-- PURPLE / INDIGO -->
+    <color name="deep_purple">#6200EE</color>
+    <color name="deep_purple_dark">#3700B3</color>
+    <color name="deep_purple_light">#BB86FC</color>
+
+    <!-- TEAL / AQUA -->
+    <color name="teal">#03DAC6</color>
+    <color name="teal_dark">#018786</color>
+
+    <!-- GRAYSCALE -->
+    <color name="gray_50">#FAFAFA</color>
+    <color name="gray_100">#F5F5F5</color>
+    <color name="gray_200">#EEEEEE</color>
+    <color name="gray_300">#E0E0E0</color>
+    <color name="gray_400">#BDBDBD</color>
+    <color name="gray_500">#9E9E9E</color>
+    <color name="gray_600">#757575</color>
+    <color name="gray_700">#616161</color>
+    <color name="gray_800">#424242</color>
+    <color name="gray_900">#212121</color>
+
+    <!-- RED -->
+    <color name="red">#F44336</color>
+    <color name="red_dark">#B00020</color>
+    <color name="accent_red">#FF5252</color>
+
+    <!-- GREEN -->
+    <color name="green">#4CAF50</color>
+    <color name="light_green">#8BC34A</color>
+
+    <!-- YELLOW / ORANGE -->
+    <color name="yellow">#FFEB3B</color>
+    <color name="amber">#FFC107</color>
+    <color name="orange">#FF9800</color>
+
+    <!-- BLUE -->
+    <color name="blue">#2196F3</color>
+    <color name="blue_accent">#448AFF</color>
+
+    <!-- PINK / PURPLE -->
+    <color name="pink">#E91E63</color>
+    <color name="purple">#9C27B0</color>
+
+    <!-- CYAN / TEAL -->
+    <color name="cyan">#00BCD4</color>
+    <color name="teal_500">#009688</color>
+
+    <!-- SURFACE / BACKGROUND -->
+    <color name="surface_light">#F2F2F2</color>
+    <color name="background_white">#FFFFFF</color>
+
+    <!-- TEXT -->
+    <color name="text_dark">#212121</color>
+    <color name="text_medium">#757575</color>
+    <color name="text_light">#BDBDBD</color>
+    <color name="text_inverse">#FFFFFF</color>
+
+    <!-- BORDER -->
+    <color name="border_light_gray">#E0E0E0</color>
+    <color name="border_medium_gray">#9E9E9E</color>
+
+    <!-- TRANSPARENCY -->
+    <color name="black_50">#80000000</color>
+    <color name="white_50">#80FFFFFF</color>
+
+    <!-- ERROR, SUCCESS, WARNING, INFO -->
+    <color name="colorError">#B00020</color>
+    <color name="colorOnError">#FFFFFF</color>
+    <color name="colorSuccess">#4CAF50</color>
+    <color name="colorWarning">#FFC107</color>
+    <color name="colorInfo">#2196F3</color>
+
+    <!-- TEXT COLORS -->
+    <color name="textPrimary">#212121</color>
+    <color name="textSecondary">#757575</color>
+    <color name="textDisabled">#BDBDBD</color>
+    <color name="textInverse">#FFFFFF</color>
+
+
+    <!-- TRANSPARENT SHADES -->
+    <color name="blackTransparent50">#80000000</color> <!-- 50% black -->
+    <color name="whiteTransparent50">#80FFFFFF</color> <!-- 50% white -->
+
 </resources>

@@ -1,6 +1,8 @@
 package com.example.tripbuddy;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,7 +10,16 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
+
 public class MainActivity extends AppCompatActivity {
+
+    private TextInputLayout emailInputLayout;
+    private TextInputEditText emailEditText;
+    private TextInputLayout passwordInputLayout;
+    private TextInputEditText passwordEditText;
+    private Button loginButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,5 +31,58 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        emailInputLayout = findViewById(R.id.inputLayoutEmail); // Assuming you add an ID to your email TextInputLayout
+        emailEditText = findViewById(R.id.edtEmail);
+
+        passwordInputLayout = findViewById(R.id.inputLayoutPassword); // Assuming you add an ID to your password TextInputLayout
+        passwordEditText = findViewById(R.id.edtPassword);
+
+        loginButton = findViewById(R.id.btnLogin);
+
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                handleLogin();
+            }
+        });
     }
+
+    private void handleLogin() {
+        // Get text from TextInputEditText
+        String email = emailEditText.getText().toString().trim();
+        String password = passwordEditText.getText().toString().trim();
+
+        // --- Input Validation Example ---
+
+        // Validate Email
+        if (email.isEmpty()) {
+            emailInputLayout.setError("Email cannot be empty"); // Set error on TextInputLayout
+            return; // Stop further processing
+        } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            emailInputLayout.setError("Enter a valid email address");
+            return;
+        } else {
+            emailInputLayout.setError(null); // Clear error if input is valid
+            emailInputLayout.setErrorEnabled(false); // You might need this to fully remove the error space
+        }
+
+        // Validate Password
+        if (password.isEmpty()) {
+            passwordInputLayout.setError("Password cannot be empty");
+            return;
+        } else if (password.length() < 6) {
+            passwordInputLayout.setError("Password must be at least 6 characters");
+            return;
+        } else {
+            passwordInputLayout.setError(null);
+            passwordInputLayout.setErrorEnabled(false);
+        }
+
+        // If all validations pass, proceed with login logic
+        // For example, make a network request, authenticate, etc.
+        System.out.println("Email: " + email);
+        System.out.println("Password: " + password);
+    }
+
 }
