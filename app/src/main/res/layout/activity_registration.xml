@@ -9,7 +9,7 @@
     android:padding="15dp"
     android:paddingEnd="30dp"
     android:paddingStart="30dp"
-    android:background="@drawable/kid_catching_the_stars">
+    android:background="@drawable/starry_night">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,7 +19,6 @@
         android:layout_marginTop="5dp"
         >
 
-        <!--            android:fontFamily="@font/inter_18pt_black"-->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,7 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/inter_18pt_bold"
-        android:text="Login"
+        android:text="Registration"
         android:textColor="@color/white"
         android:textSize="25sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -85,7 +84,8 @@
             android:id="@+id/inputLayoutPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:passwordToggleEnabled="true">
+            app:passwordToggleEnabled="true"
+            android:layout_marginBottom="15dp">
 
 
 
@@ -95,9 +95,59 @@
                 android:id="@+id/edtPassword"
                 android:background="@drawable/edittext_rounded"
                 android:fontFamily="@font/inter_18pt_light"
-                android:hint="Enter password"
+                android:hint="Password"
                 android:inputType="textPassword"
                 app:endIconMode="password_toggle"
+                android:padding="16dp"
+                android:textColor="#212121"
+                android:textColorHint="#888888"
+                android:textSize="16sp"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inputLayoutPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Phone Number"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginBottom="15dp">
+
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:background="@drawable/edittext_rounded"
+                android:fontFamily="@font/inter_18pt_light"
+                android:inputType="phone"
+                android:padding="16dp"
+                android:textColor="#212121"
+                android:textColorHint="#888888"
+                android:textSize="16sp"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inputLayoutAge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Age"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginBottom="15dp">
+
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtAge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:background="@drawable/edittext_rounded"
+                android:fontFamily="@font/inter_18pt_light"
+                android:inputType="number"
                 android:padding="16dp"
                 android:textColor="#212121"
                 android:textColorHint="#888888"
@@ -116,10 +166,10 @@
             />
 
         <Button
-            android:id="@+id/btnLogin"
+            android:id="@+id/btnRegister"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Login"
+            android:text="Register"
             android:textColor="@android:color/white"
             android:background="@drawable/button_shape"
             app:backgroundTint="@null"
@@ -141,17 +191,17 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Don't have an account?"
+            android:text="Already have an account?"
             android:fontFamily="@font/inter_18pt"
             android:textColor="@color/white"
             android:layout_gravity="center"
             android:layout_marginBottom="10dp"/>
 
         <Button
-            android:id="@+id/btnRegister"
+            android:id="@+id/btnLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Register"
+            android:text="Login"
             android:textColor="@android:color/white"
             android:background="@drawable/button_shape"
             app:backgroundTint="@null"
