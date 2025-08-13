@@ -18,8 +18,6 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="5dp"
         >
-
-        <!--            android:fontFamily="@font/inter_18pt_black"-->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

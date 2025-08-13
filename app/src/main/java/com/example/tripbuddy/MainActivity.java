@@ -32,10 +32,10 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        emailInputLayout = findViewById(R.id.inputLayoutEmail); // Assuming you add an ID to your email TextInputLayout
+        emailInputLayout = findViewById(R.id.inputLayoutEmail); 
         emailEditText = findViewById(R.id.edtEmail);
 
-        passwordInputLayout = findViewById(R.id.inputLayoutPassword); // Assuming you add an ID to your password TextInputLayout
+        passwordInputLayout = findViewById(R.id.inputLayoutPassword); 
         passwordEditText = findViewById(R.id.edtPassword);
 
         loginButton = findViewById(R.id.btnLogin);
@@ -57,14 +57,14 @@ public class MainActivity extends AppCompatActivity {
 
         // Validate Email
         if (email.isEmpty()) {
-            emailInputLayout.setError("Email cannot be empty"); // Set error on TextInputLayout
-            return; // Stop further processing
+            emailInputLayout.setError("Email cannot be empty"); 
+            return; 
         } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             emailInputLayout.setError("Enter a valid email address");
             return;
         } else {
-            emailInputLayout.setError(null); // Clear error if input is valid
-            emailInputLayout.setErrorEnabled(false); // You might need this to fully remove the error space
+            emailInputLayout.setError(null); 
+            emailInputLayout.setErrorEnabled(false); 
         }
 
         // Validate Password
@@ -79,10 +79,7 @@ public class MainActivity extends AppCompatActivity {
             passwordInputLayout.setErrorEnabled(false);
         }
 
-        // If all validations pass, proceed with login logic
-        // For example, make a network request, authenticate, etc.
         System.out.println("Email: " + email);
         System.out.println("Password: " + password);
     }
-
 }

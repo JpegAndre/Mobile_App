@@ -41,7 +41,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="@+id/layoutLogin"
-        android:layout_marginBottom="250dp"
+        android:layout_marginBottom="400dp"
         />
 
 
@@ -51,8 +51,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginBottom="50pt">
+        app:layout_constraintTop_toTopOf="parent">
 
 
         <com.google.android.material.textfield.TextInputLayout
@@ -61,6 +60,7 @@
             android:layout_height="wrap_content"
             android:hint="Email"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:hintTextColor="@color/white"
             android:layout_marginBottom="15dp">
 
 
@@ -73,9 +73,9 @@
                 android:fontFamily="@font/inter_18pt_light"
                 android:inputType="textEmailAddress"
                 android:padding="16dp"
-                android:textColor="#212121"
-                android:textColorHint="#888888"
                 android:textSize="16sp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
                 />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -85,6 +85,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:passwordToggleEnabled="true"
+            app:hintTextColor="@color/white"
             android:layout_marginBottom="15dp">
 
 
@@ -100,7 +101,7 @@
                 app:endIconMode="password_toggle"
                 android:padding="16dp"
                 android:textColor="#212121"
-                android:textColorHint="#888888"
+                android:textColorHint="@color/gray_400"
                 android:textSize="16sp"
                 />
 
@@ -112,6 +113,7 @@
             android:layout_height="wrap_content"
             android:hint="Phone Number"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:hintTextColor="@color/white"
             android:layout_marginBottom="15dp">
 
 
@@ -125,7 +127,7 @@
                 android:inputType="phone"
                 android:padding="16dp"
                 android:textColor="#212121"
-                android:textColorHint="#888888"
+                android:textColorHint="@color/gray_400"
                 android:textSize="16sp"
                 />
 
@@ -137,6 +139,7 @@
             android:layout_height="wrap_content"
             android:hint="Age"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:hintTextColor="@color/white"
             android:layout_marginBottom="15dp">
 
 
@@ -150,7 +153,7 @@
                 android:inputType="number"
                 android:padding="16dp"
                 android:textColor="#212121"
-                android:textColorHint="#888888"
+                android:textColorHint="@color/gray_400"
                 android:textSize="16sp"
                 />
 
