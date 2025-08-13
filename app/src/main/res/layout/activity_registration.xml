@@ -6,9 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:padding="15dp"
-    android:paddingEnd="30dp"
-    android:paddingStart="30dp"
+    android:paddingVertical="15dp"
+    android:paddingHorizontal="30dp"
     android:background="@drawable/starry_night">
 
     <LinearLayout
@@ -28,7 +27,6 @@
             android:textSize="35sp"
             android:layout_gravity="center"/>
 
-
     </LinearLayout>
 
     <TextView
@@ -47,11 +45,14 @@
 
     <LinearLayout
         android:id="@+id/layoutLogin"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:paddingHorizontal="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
 
 
         <com.google.android.material.textfield.TextInputLayout
