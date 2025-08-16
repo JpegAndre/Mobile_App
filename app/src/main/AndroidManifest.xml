@@ -15,8 +15,6 @@
             android:name=".HomeActivity"
             android:exported="false"
             android:label="@string/title_activity_home">
-
-
         </activity>
         <activity
             android:name=".Splash"
@@ -24,8 +22,6 @@
         <activity
             android:name=".Registration"
             android:exported="true">
-
-
         </activity>
         <activity
             android:name=".MainActivity"
