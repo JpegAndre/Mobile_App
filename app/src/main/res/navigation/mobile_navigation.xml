@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/galleryFragment">
 
     <fragment
         android:id="@+id/navigation_home"
@@ -22,4 +22,25 @@
         android:name="com.example.tripbuddy.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
+
+    <fragment
+        android:id="@+id/galleryFragment"
+        android:name="com.example.tripbuddy.GalleryFragment"
+        android:label="@string/title_activity_gallery"
+        tools:layout="@layout/fragment_gallery" />
+    <fragment
+        android:id="@+id/tripFragment"
+        android:name="com.example.tripbuddy.TripFragment"
+        android:label="fragment_trip"
+        tools:layout="@layout/fragment_trip" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.tripbuddy.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/memoryFragment"
+        android:name="com.example.tripbuddy.MemoryFragment"
+        android:label="fragment_memory"
+        tools:layout="@layout/fragment_memory" />
 </navigation>
