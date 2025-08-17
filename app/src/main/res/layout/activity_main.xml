@@ -46,12 +46,15 @@
 
     <LinearLayout
         android:id="@+id/layoutLogin"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:paddingHorizontal="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginBottom="50pt">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="100dp">
 
 
         <com.google.android.material.textfield.TextInputLayout
@@ -60,7 +63,8 @@
             android:layout_height="wrap_content"
             android:hint="Email"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_marginBottom="15dp">
+            app:hintTextColor="@color/white"
+            android:layout_marginBottom="25dp">
 
 
             <com.google.android.material.textfield.TextInputEditText
@@ -72,9 +76,8 @@
                 android:fontFamily="@font/inter_18pt_light"
                 android:inputType="textEmailAddress"
                 android:padding="16dp"
-                android:textColor="#212121"
-                android:textColorHint="#888888"
                 android:textSize="16sp"
+                android:textColor="@color/white"
                 />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -83,22 +86,22 @@
             android:id="@+id/inputLayoutPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:hintTextColor="@color/white"
             app:passwordToggleEnabled="true">
 
 
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/edtPassword"
                 android:background="@drawable/edittext_rounded"
                 android:fontFamily="@font/inter_18pt_light"
-                android:hint="Enter password"
+                android:hint="Password"
                 android:inputType="textPassword"
                 app:endIconMode="password_toggle"
                 android:padding="16dp"
                 android:textColor="#212121"
-                android:textColorHint="#888888"
                 android:textSize="16sp"
                 />
 
@@ -118,7 +121,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Login"
-            android:textColor="@android:color/white"
+            android:textColor="@color/white"
             android:background="@drawable/button_shape"
             app:backgroundTint="@null"
             android:layout_gravity="center"

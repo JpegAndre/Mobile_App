@@ -76,7 +76,6 @@
                 android:padding="16dp"
                 android:textSize="16sp"
                 android:textColor="@color/white"
-                android:textColorHint="@color/white"
                 />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -92,9 +91,9 @@
 
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/edtPassword"
                 android:background="@drawable/edittext_rounded"
                 android:fontFamily="@font/inter_18pt_light"
                 android:hint="Password"
@@ -102,7 +101,6 @@
                 app:endIconMode="password_toggle"
                 android:padding="16dp"
                 android:textColor="#212121"
-                android:textColorHint="@color/gray_400"
                 android:textSize="16sp"
                 />
 
@@ -128,7 +126,6 @@
                 android:inputType="phone"
                 android:padding="16dp"
                 android:textColor="#212121"
-                android:textColorHint="@color/gray_400"
                 android:textSize="16sp"
                 />
 
