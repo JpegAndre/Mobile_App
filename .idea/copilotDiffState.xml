@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CopilotDiffPersistence">
+    <option name="pendingDiffs">
+      <map>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/example/tripbuddy/ui/gallery/GalleryViewModel.java">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/app/src/main/java/com/example/tripbuddy/ui/gallery/GalleryViewModel.java" />
+              <option name="originalContent" value="package com.example.tripbuddy.ui.gallery;&#10;&#10;import androidx.lifecycle.ViewModel;&#10;&#10;public class GalleryViewModel extends ViewModel {&#10;    // TODO: Implement the ViewModel&#10;}" />
+              <option name="updatedContent" value="package com.example.tripbuddy.ui.gallery;&#13;&#10;&#13;&#10;import androidx.lifecycle.ViewModel;&#13;&#10;&#13;&#10;public class GalleryViewModel extends ViewModel {&#13;&#10;    // TODO: Implement the ViewModel&#13;&#10;}" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

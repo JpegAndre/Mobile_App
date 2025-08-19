@@ -1,4 +1,4 @@
-package com.example.tripbuddy;
+package com.example.tripbuddy.ui.settings;
 
 import androidx.lifecycle.ViewModel;
 

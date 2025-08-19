@@ -26,7 +26,7 @@ public class HomeActivity extends AppCompatActivity {
 
         BottomNavigationView navView = binding.navView;
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
+                R.id.settingsFragment, R.id.tripFragment, R.id.memoryFragment, R.id.galleryFragment)
                 .build();
         NavController navController = NavHostFragment.findNavController(
                 getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_activity_home));
