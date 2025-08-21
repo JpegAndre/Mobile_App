@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -31,11 +32,10 @@ public class Splash extends AppCompatActivity {
             return insets;
         });
 
-
         new Handler().postDelayed(() -> {
             Animation fadeIn = AnimationUtils.loadAnimation(Splash.this, R.anim.fade_in);
             txtView.startAnimation(fadeIn);
-            txtView.setVisibility(TextView.VISIBLE);  // make sure it’s visible
+            txtView.setVisibility(TextView.VISIBLE);
         }, 500);
 
         new Handler().postDelayed(new Runnable() {
@@ -43,8 +43,8 @@ public class Splash extends AppCompatActivity {
             public void run() {
 
                 startActivity(new Intent(Splash.this, MainActivity.class));
-                finish(); // Optional: closes the splash screen so user can't return to it
+                finish();
             }
-        }, 3000);
+        }, 2000);
     }
 }
