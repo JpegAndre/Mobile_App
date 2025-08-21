@@ -8,24 +8,26 @@
     tools:context=".Splash"
     android:background="@drawable/tamara_bitter">
 
-    <ImageView
-        android:layout_width="220dp"
-        android:layout_height="220dp"
-        android:background="@drawable/main_logo_less"
-        android:contentDescription="Main app logo"
-        app:layout_constraintBottom_toTopOf="@+id/textWelcome"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginBottom="40dp" />
+<!--    <ImageView-->
+<!--        android:layout_width="220dp"-->
+<!--        android:layout_height="220dp"-->
+<!--        android:background="@drawable/main_logo_less"-->
+<!--        android:contentDescription="Main app logo"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/textWelcome"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        android:layout_marginBottom="40dp" />-->
 
     <TextView
         android:id="@+id/textWelcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/inter_18pt_bold"
+        android:fontFamily="@font/audiowide_regular"
         android:text="Welcome to TripBuddy"
         android:textColor="@color/white"
-        android:textSize="24sp"
+        android:textSize="30sp"
+        android:visibility="invisible"
+        android:layout_marginBottom="50dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
