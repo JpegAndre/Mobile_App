@@ -6,4 +6,12 @@
     </style>
 
     <style name="Theme.TripBuddy" parent="Base.Theme.TripBuddy" />
+    
+    <style name="Theme.TripBuddy.Splash" parent="Theme.SplashScreen">
+        <!-- Background color of splash -->
+        <item name="windowSplashScreenBackground">@color/blue</item>
+
+        <!-- Icon in the center (usually your app logo) -->
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_logo_launcher</item>
+    </style>
 </resources>
