@@ -28,9 +28,10 @@ public class Splash extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+
                 startActivity(new Intent(Splash.this, MainActivity.class));
                 finish(); // Optional: closes the splash screen so user can't return to it
             }
-        }, 1000);
+        }, 2000);
     }
 }

@@ -14,7 +14,8 @@
         <activity
             android:name=".HomeActivity"
             android:exported="false"
-            android:label="@string/title_activity_home">
+            android:label="@string/title_activity_home"
+            android:theme="@style/Theme.TripBuddy">
         </activity>
         <activity
             android:name=".Splash"
@@ -28,11 +29,13 @@
         </activity>
         <activity
             android:name=".Registration"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.TripBuddy">
         </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.TripBuddy">
 
 <!--            <intent-filter>-->
 <!--                <action android:name="android.intent.action.MAIN" />-->
