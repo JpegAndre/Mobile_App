@@ -1,8 +1,9 @@
 package com.example.tripbuddy.ui.trip;
 
-import androidx.lifecycle.ViewModelProvider;
-import com.example.tripbuddy.ui.trip.TripViewModel;
 import com.example.tripbuddy.R;
+import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import android.os.Bundle;
 
@@ -14,13 +15,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class TripFragment extends Fragment {
 
-    private TripViewModel mViewModel;
-
-    public static TripFragment newInstance() {
-        return new TripFragment();
-    }
+    private TextInputEditText startEditText, endEditText;
+    TextInputLayout startInputLayout, endInputLayout;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -29,10 +31,50 @@ public class TripFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(TripViewModel.class);
-        // TODO: Use the ViewModel
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        startEditText = view.findViewById(R.id.edtDateStart);
+        endEditText = view.findViewById(R.id.edtDateEnd);
+        startInputLayout = view.findViewById(R.id.inputLayoutDateStart);
+        endInputLayout = view.findViewById(R.id.inputLayoutDateEnd);
+
+
+//        edtStart.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                MaterialDatePicker<Long> startDatePicker = MaterialDatePicker.Builder.datePicker()
+//                        .setTitleText("Select start date")
+//                        .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+//                        .build();
+//                startDatePicker.show(getParentFragmentManager(), "START_DATE_PICKER");
+//                startDatePicker.addOnPositiveButtonClickListener(selection ->
+//                        edtStart.setText(new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date((Long) selection)))
+//                );
+//            }
+//        });
+
+        startEditText.setOnClickListener(v -> {
+            MaterialDatePicker<Long> startDatePicker = MaterialDatePicker.Builder.datePicker()
+                    .setTitleText("Select start date")
+                    .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+                    .build();
+            startDatePicker.show(getParentFragmentManager(), "START_DATE_PICKER");
+            startDatePicker.addOnPositiveButtonClickListener(selection ->
+                startEditText.setText(new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date((Long) selection)))
+            );
+        });
+
+        endEditText.setOnClickListener(v -> {
+            MaterialDatePicker<Long> endDatePicker = MaterialDatePicker.Builder.datePicker()
+                    .setTitleText("Select end date")
+                    .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+                    .build();
+            endDatePicker.show(getParentFragmentManager(), "END_DATE_PICKER");
+            endDatePicker.addOnPositiveButtonClickListener(selection ->
+                endEditText.setText(new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date((Long) selection)))
+            );
+        });
     }
 
 }
