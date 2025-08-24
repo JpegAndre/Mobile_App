@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private TextInputEditText emailEditText;
     private TextInputLayout passwordInputLayout;
     private TextInputEditText passwordEditText;
-    private Button loginButton;
+    private Button loginButton, registerButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         passwordEditText = findViewById(R.id.edtPassword);
 
         loginButton = findViewById(R.id.btnLogin);
+        registerButton = findViewById(R.id.btnRegister);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,14 +49,22 @@ public class MainActivity extends AppCompatActivity {
                 //handleLogin();
             }
         });
+
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentRegister = new Intent(MainActivity.this, Registration.class);
+                intentRegister.putExtra("email", emailEditText.getText().toString().trim());
+                intentRegister.putExtra("password", passwordEditText.getText().toString().trim());
+                startActivity(intentRegister);
+            }
+        });
     }
 
     private void handleLogin() {
-        // Get text from TextInputEditText
         String email = emailEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString().trim();
 
-        // --- Input Validation Example ---
 
         // Validate Email
         if (email.isEmpty()) {

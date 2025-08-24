@@ -46,6 +46,19 @@ public class Registration extends AppCompatActivity {
         btnRegister = findViewById(R.id.btnRegister);
         btnLogin = findViewById(R.id.btnLogin);
 
+        Intent receiveLogin = getIntent();
+        String email = receiveLogin.getStringExtra("email");
+        String password = receiveLogin.getStringExtra("password");
+
+        if (email != null) {
+            edtEmail.setText(email);
+        }
+
+        if (password != null) {
+            edtPassword.setText(password);
+        }
+
+
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
