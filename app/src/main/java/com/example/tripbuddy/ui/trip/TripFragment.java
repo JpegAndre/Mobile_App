@@ -9,6 +9,9 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -24,7 +27,7 @@ public class TripFragment extends Fragment {
     private TextInputEditText startEditText, endEditText;
     TextInputLayout startInputLayout, endInputLayout;
 
-
+    private View scrollView;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -40,6 +43,7 @@ public class TripFragment extends Fragment {
         endEditText = view.findViewById(R.id.edtDateEnd);
         startInputLayout = view.findViewById(R.id.inputLayoutDateStart);
         endInputLayout = view.findViewById(R.id.inputLayoutDateEnd);
+        scrollView = view.findViewById(R.id.scrollView);
 
 
 //        edtStart.setOnClickListener(new View.OnClickListener() {
@@ -76,6 +80,12 @@ public class TripFragment extends Fragment {
             endDatePicker.addOnPositiveButtonClickListener(selection ->
                 endEditText.setText(new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date((Long) selection)))
             );
+        });
+
+        ViewCompat.setOnApplyWindowInsetsListener(scrollView, (v, insets) -> {
+            Insets navBarInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(0, 0, 0, navBarInsets.bottom);
+            return insets;
         });
     }
 
