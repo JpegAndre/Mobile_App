@@ -90,6 +90,8 @@ public class MainActivity extends AppCompatActivity {
             passwordInputLayout.setErrorEnabled(false);
         }
 
+        // TODO: Validate there exists such login and then login else send to registration
+
         System.out.println("Email: " + email);
         System.out.println("Password: " + password);
     }

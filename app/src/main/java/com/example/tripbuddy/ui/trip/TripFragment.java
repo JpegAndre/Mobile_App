@@ -24,6 +24,8 @@ public class TripFragment extends Fragment {
     private TextInputEditText startEditText, endEditText;
     TextInputLayout startInputLayout, endInputLayout;
 
+
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {

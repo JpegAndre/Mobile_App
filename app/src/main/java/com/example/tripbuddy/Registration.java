@@ -17,10 +17,15 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 public class Registration extends AppCompatActivity {
 
     private Button btnRegister, btnLogin;
+
+    private TextInputLayout emailInputLayout, passwordInputLayout, phoneInputLayout, ageInputLayout;
+
+    private TextInputEditText emailEditText, passwordEditText, phoneEditText, ageEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +42,10 @@ public class Registration extends AppCompatActivity {
         TextInputEditText edtPassword = findViewById(R.id.edtPassword);
         TextInputEditText edtPhone = findViewById(R.id.edtPhone);
         TextInputEditText edtAge = findViewById(R.id.edtAge);
+        TextInputLayout inputLayoutEmail = findViewById(R.id.inputLayoutEmail);
+        TextInputLayout inputLayoutPassword = findViewById(R.id.inputLayoutPassword);
+        TextInputLayout inputLayoutPhone = findViewById(R.id.inputLayoutPhone);
+        TextInputLayout inputLayoutAge = findViewById(R.id.inputLayoutAge);
 
         setupEditTextAnimation(edtEmail);
         setupEditTextAnimation(edtPassword);
@@ -63,6 +72,7 @@ public class Registration extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Registration.this, MainActivity.class));
+                handleRegistration();
             }
         });
 
@@ -72,6 +82,63 @@ public class Registration extends AppCompatActivity {
                  startActivity(new Intent(Registration.this, MainActivity.class));
             }
         });
+    }
+
+    private void handleRegistration() {
+        String email = emailEditText.getText().toString().trim();
+        String password = passwordEditText.getText().toString().trim();
+        String phone = phoneEditText.getText().toString().trim();
+        int age = Integer.parseInt(ageEditText.getText().toString().trim());
+
+        if (email.isEmpty()) {
+            emailInputLayout.setError("Email cannot be empty");
+        } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            emailInputLayout.setError("Enter a valid email address");
+            return;
+        } else {
+            emailInputLayout.setError(null);
+            emailInputLayout.setErrorEnabled(false);
+        }
+
+        if (password.isEmpty()) {
+            passwordInputLayout.setError("Password cannot be empty");
+            return;
+        } else if (password.length() < 6) {
+            passwordInputLayout.setError("Password must be at least 6 characters");
+            return;
+        } else {
+            passwordInputLayout.setError(null);
+            passwordInputLayout.setErrorEnabled(false);
+        }
+
+        if (phone.isEmpty()) {
+            phoneInputLayout.setError("Phone number cannot be empty");
+            return;
+        } else if (!android.util.Patterns.PHONE.matcher(phone).matches()) {
+            phoneInputLayout.setError("Enter a valid phone number");
+            return;
+        } else {
+            phoneInputLayout.setError(null);
+            phoneInputLayout.setErrorEnabled(false);
+        }
+
+        if (age <= 0) {
+            ageInputLayout.setError("Age must be a positive number");
+            return;
+        } else if (age > 120) {
+            ageInputLayout.setError("Age cannot be greater than 120");
+            return;
+        } else {
+            ageInputLayout.setError(null);
+            ageInputLayout.setErrorEnabled(false);
+        }
+
+        // TODO: Validate there doesn't exist such login and then create user
+
+        System.out.println("Email: " + email);
+        System.out.println("Password: " + password);
+        System.out.println("Phone: " + phone);
+        System.out.println("Age: " + age);
     }
 
     private void setupEditTextAnimation(TextInputEditText editText) {
