@@ -1,9 +1,14 @@
 package com.example.tripbuddy;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +20,12 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String SHARED_PREFS = "loginPrefs";
+    private static final String KEY_EMAIL = "email";
+    private static final String KEY_PASSWORD = "password";
+
+    private static final String KEY_ISLOGGEDIN = "isLoggedIn";
 
     private TextInputLayout emailInputLayout;
     private TextInputEditText emailEditText;
@@ -90,9 +101,50 @@ public class MainActivity extends AppCompatActivity {
             passwordInputLayout.setErrorEnabled(false);
         }
 
+        String hashedPassword = hashValue(password);
+
         // TODO: Validate there exists such login and then login else send to registration
+
+        // Shared preferences for the currently logged in user
+        SharedPreferences loginPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = loginPreferences.edit();
+        editor.putString(KEY_EMAIL, email);
+        editor.putString(KEY_PASSWORD, hashedPassword);
+        editor.putBoolean(KEY_ISLOGGEDIN, true);
+        editor.apply();
+
 
         System.out.println("Email: " + email);
         System.out.println("Password: " + password);
+    }
+
+    public static String hashValue(String input) {
+        try {
+            // Create MessageDigest instance for SHA-256
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+
+            // Apply hash function to the input bytes
+            byte[] hashBytes = digest.digest(input.getBytes(StandardCharsets.UTF_8));
+
+            // Convert bytes to hexadecimal format
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : hashBytes) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) hexString.append('0');
+                hexString.append(hex);
+            }
+
+            return hexString.toString();
+
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("Error: SHA-256 algorithm not found", e);
+        }
+    }
+
+    private void clearData() {
+        SharedPreferences loginPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = loginPreferences.edit();
+        editor.clear();
+        editor.apply();
     }
 }

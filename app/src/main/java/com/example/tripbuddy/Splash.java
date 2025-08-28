@@ -1,6 +1,7 @@
 package com.example.tripbuddy;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.animation.Animation;
@@ -38,13 +39,30 @@ public class Splash extends AppCompatActivity {
             txtView.setVisibility(TextView.VISIBLE);
         }, 500);
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//
+//                startActivity(new Intent(Splash.this, MainActivity.class));
+//                finish();
+//            }
+//        }, 2000);
 
-                startActivity(new Intent(Splash.this, MainActivity.class));
-                finish();
-            }
-        }, 2000);
+        SharedPreferences loginPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
+        boolean isLoggedIn = loginPreferences.getBoolean("isLoggedIn", false);
+
+        if (isLoggedIn) {
+            startActivity(new Intent(Splash.this, HomeActivity.class));
+            finish();
+        } else {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+
+                    startActivity(new Intent(Splash.this, MainActivity.class));
+                    finish();
+                }
+            }, 2000);
+        }
     }
 }

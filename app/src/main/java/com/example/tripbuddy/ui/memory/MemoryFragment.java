@@ -7,12 +7,14 @@ import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,6 +83,15 @@ public class MemoryFragment extends Fragment {
             );
             date = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         });
+
+
+        imageButton.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            intent.setType("image/*"); // TODO: Replace this deprecated method
+            startActivityForResult(intent, 100);
+            txtImage.setVisibility(View.VISIBLE);
+            Toast.makeText(getActivity(), "Image uploaded", Toast.LENGTH_SHORT).show();
+                });
 
         saveButton.setOnClickListener(v -> {
             Toast.makeText(getActivity(), date.toString(), Toast.LENGTH_SHORT).show();
