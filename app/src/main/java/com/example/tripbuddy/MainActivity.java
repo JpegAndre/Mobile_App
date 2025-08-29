@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String KEY_EMAIL = "email";
     private static final String KEY_PASSWORD = "password";
 
-    private static final String KEY_ISLOGGEDIN = "isLoggedIn";
+    public static final String KEY_ISLOGGEDIN = "isLoggedIn";
 
     private TextInputLayout emailInputLayout;
     private TextInputEditText emailEditText;

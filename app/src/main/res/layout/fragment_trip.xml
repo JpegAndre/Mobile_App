@@ -46,19 +46,29 @@
             android:paddingHorizontal="30dp"
             app:layout_constraintTop_toBottomOf="@id/galleryHeader">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edtDestination"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputLayoutDestination"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/edittext_home"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:hint="Destination"
-                android:fontFamily="@font/inter_18pt_light"
-                android:inputType="textEmailAddress"
                 android:layout_marginBottom="15dp"
-                android:padding="10dp"
-                android:textSize="16sp"
-                android:textColor="@color/black"
-                />
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edtDestination"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edittext_home"
+                    android:fontFamily="@font/inter_18pt_light"
+                    android:inputType="textEmailAddress"
+                    android:padding="10dp"
+                    android:textSize="15sp"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
 
 
             <LinearLayout
@@ -83,6 +93,7 @@
                         android:background="@drawable/edittext_home"
                         android:gravity="center"
                         android:clickable="true"
+                        android:textSize="15sp"
                         android:focusable="false"
                         android:inputType="none"/>
                 </com.google.android.material.textfield.TextInputLayout>
@@ -110,6 +121,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/edittext_home"
                         android:gravity="center"
+                        android:textSize="15sp"
                         android:focusable="false"
                         android:clickable="true"
                         android:inputType="none"/>
@@ -166,19 +178,29 @@
                     </RadioGroup>
                 </LinearLayout>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edtTripExpenses"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/inputLayoutTravelExpenses"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/edittext_home"
-                    android:hint="Travel Expenses"
-                    android:fontFamily="@font/inter_18pt_light"
-                    android:inputType="number"
                     android:layout_weight="1"
-                    android:padding="10dp"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"
-                    />
+                    android:inputType="number"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:hint="Travel Expenses"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtTripExpenses"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edittext_home"
+                        android:fontFamily="@font/inter_18pt_light"
+                        android:paddingVertical="10dp"
+                        android:textSize="15sp"
+                        android:textColor="@color/black"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
 
             </LinearLayout>
 
@@ -201,7 +223,7 @@
                 android:fontFamily="@font/inter_18pt_light"
                 android:layout_marginVertical="10dp"
                 android:padding="10dp"
-                android:textSize="16sp"
+                android:textSize="15sp"
                 android:textColor="@color/black"
                 />
 
@@ -210,38 +232,68 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edtCustExpenses"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/inputLayoutCustomExpenses"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/edittext_home"
-                    android:hint="Custom Expenses"
-                    android:fontFamily="@font/inter_18pt_light"
-                    android:inputType="number"
-                    android:layout_weight="1"
-                    android:layout_marginVertical="10dp"
                     android:layout_marginEnd="10dp"
-                    android:padding="10dp"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"
-                    />
+                    android:layout_weight="1"
+                    android:inputType="number"
+                    android:hint="Custom Expenses"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edtMealExpenses"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtCustomExpenses"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edittext_home"
+                        android:fontFamily="@font/inter_18pt_light"
+                        android:padding="10dp"
+                        android:textSize="15sp"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/inputLayoutMealExpenses"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-
-                    android:background="@drawable/edittext_home"
-                    android:hint="Meal Expenses"
-                    android:fontFamily="@font/inter_18pt_light"
-                    android:inputType="number"
-                    android:layout_weight="1"
-                    android:layout_marginTop="10dp"
                     android:layout_marginStart="10dp"
-                    android:padding="10dp"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"
-                    />
+                    android:layout_weight="1"
+                    android:inputType="number"
+                    android:hint="Meal Expenses"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtMealExpenses"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edittext_home"
+                        android:fontFamily="@font/inter_18pt_light"
+                        android:padding="10dp"
+                        android:textSize="15sp"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+<!--                <com.google.android.material.textfield.TextInputEditText-->
+<!--                    android:id="@+id/edtMealExpenses"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+
+<!--                    android:background="@drawable/edittext_home"-->
+<!--                    android:hint="Meal Expenses"-->
+<!--                    android:fontFamily="@font/inter_18pt_light"-->
+<!--                    android:inputType="number"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:layout_marginTop="10dp"-->
+<!--                    android:layout_marginStart="10dp"-->
+<!--                    android:padding="10dp"-->
+<!--                    android:textSize="15sp"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    />-->
 
 
             </LinearLayout>
@@ -277,6 +329,7 @@
                 android:id="@+id/btnCalculate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/button_shape"
                 android:textAllCaps="false"
                 android:text="Calculate"
                 android:layout_weight="1"
@@ -294,6 +347,7 @@
                 android:id="@+id/btnSubmit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/button_shape"
                 android:enabled="false"
                 android:textAllCaps="false"
                 android:text="Save"

@@ -4,6 +4,7 @@ import com.example.tripbuddy.R;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.example.tripbuddy.MainActivity;
 
 import android.os.Bundle;
 
@@ -17,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -24,8 +26,10 @@ import java.util.Locale;
 
 public class TripFragment extends Fragment {
 
-    private TextInputEditText startEditText, endEditText;
-    TextInputLayout startInputLayout, endInputLayout;
+    private TextInputEditText startEditText, endEditText, destinationEditText, notesEditText, travelExEditText, customExEditText, mealExEditText;
+    private TextInputLayout startInputLayout, endInputLayout, destinationInputLayout, notesInputLayout, travelExInputLayout, customExInputLayout, mealExInputLayout;
+
+    private Button calculateButton, saveButton;
 
     private View scrollView;
 
@@ -44,6 +48,18 @@ public class TripFragment extends Fragment {
         startInputLayout = view.findViewById(R.id.inputLayoutDateStart);
         endInputLayout = view.findViewById(R.id.inputLayoutDateEnd);
         scrollView = view.findViewById(R.id.scrollView);
+        destinationEditText = view.findViewById(R.id.edtDestination);
+        destinationInputLayout = view.findViewById(R.id.inputLayoutDestination);
+        notesEditText = view.findViewById(R.id.edtNotes);
+        notesInputLayout = view.findViewById(R.id.inputLayoutNotes);
+        travelExEditText = view.findViewById(R.id.edtTravelEx);
+        travelExInputLayout = view.findViewById(R.id.inputLayoutTravelEx);
+        customExEditText = view.findViewById(R.id.edtCustomEx);
+        customExInputLayout = view.findViewById(R.id.inputLayoutCustomEx);
+        mealExEditText = view.findViewById(R.id.edtMealEx);
+        mealExInputLayout = view.findViewById(R.id.inputLayoutMealEx);
+
+
 
 
 //        edtStart.setOnClickListener(new View.OnClickListener() {
