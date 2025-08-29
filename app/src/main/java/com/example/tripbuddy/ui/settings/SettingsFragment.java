@@ -1,9 +1,14 @@
 package com.example.tripbuddy.ui.settings;
 
 import androidx.lifecycle.ViewModelProvider;
+
+import com.example.tripbuddy.MainActivity;
+import com.example.tripbuddy.Registration;
+import com.example.tripbuddy.Trips;
 import com.example.tripbuddy.ui.settings.SettingsViewModel;
 import com.example.tripbuddy.R;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -20,7 +25,7 @@ public class SettingsFragment extends Fragment {
 
     private SettingsViewModel mViewModel;
 
-    private Button logoutButton;
+    private Button logoutButton, tripsButton;
 
     public static SettingsFragment newInstance() {
         return new SettingsFragment();
@@ -37,6 +42,7 @@ public class SettingsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         logoutButton = view.findViewById(R.id.btnLogout);
+        tripsButton = view.findViewById(R.id.btnTrips);
 
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,7 +54,15 @@ public class SettingsFragment extends Fragment {
                 editor.putString("email", "");
                 editor.putString("password", "");
                 editor.apply();
+                startActivity(new Intent(getActivity(), MainActivity.class));
                 getActivity().finish();
+            }
+        });
+
+        tripsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), Trips.class));
             }
         });
     }

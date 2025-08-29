@@ -1,11 +1,13 @@
 package com.example.tripbuddy.ui.trip;
 
 import com.example.tripbuddy.R;
+import com.example.tripbuddy.DatabaseHelper;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.example.tripbuddy.MainActivity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -22,6 +24,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -39,7 +42,7 @@ public class TripFragment extends Fragment {
 
     private CheckBox hiking, bus, sightseeing, museum;
 
-    private String destination, notes;
+    private String destination, notes, userEmail;
 
     private View scrollView;
 
@@ -59,6 +62,10 @@ public class TripFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        DatabaseHelper dbHelper = new DatabaseHelper(getActivity());
+        SharedPreferences loginPreferences = getActivity().getSharedPreferences(MainActivity.SHARED_PREFS, getActivity().MODE_PRIVATE);
+        userEmail = loginPreferences.getString(MainActivity.KEY_EMAIL, "");
 
         startEditText = view.findViewById(R.id.edtDateStart);
         endEditText = view.findViewById(R.id.edtDateEnd);
@@ -107,10 +114,47 @@ public class TripFragment extends Fragment {
                 if (endEditText.getText() == null || endEditText.getText().toString().isEmpty()) {
                     endInputLayout.setError("End date cannot be empty");
                     isValid = false;
+                    return;
                 } else {
                     endInputLayout.setError(null);
                     endInputLayout.setErrorEnabled(false);
                 }
+
+                // Date validation: start date >= current date, end date > start date
+                try {
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                    Date start = sdf.parse(startEditText.getText().toString());
+                    Date end = sdf.parse(endEditText.getText().toString());
+                    Date now = new Date();
+
+                    // Remove time from current date for comparison
+                    String todayStr = sdf.format(now);
+                    Date today = sdf.parse(todayStr);
+
+                    if (start.before(today)) {
+                        startInputLayout.setError("Start date cannot be before today");
+                        isValid = false;
+                        return;
+                    } else {
+                        startInputLayout.setError(null);
+                        startInputLayout.setErrorEnabled(false);
+                    }
+
+                    if (!end.after(start)) {
+                        endInputLayout.setError("End date must be after start date");
+                        isValid = false;
+                        return;
+                    } else {
+                        endInputLayout.setError(null);
+                        endInputLayout.setErrorEnabled(false);
+                    }
+                } catch (Exception e) {
+                    startInputLayout.setError("Invalid date format");
+                    endInputLayout.setError("Invalid date format");
+                    isValid = false;
+                    return;
+                }
+
                 // Validate Destination
                 if (destinationEditText.getText() == null || destinationEditText.getText().toString().isEmpty()) {
                     destinationInputLayout.setError("Destination cannot be empty");
@@ -120,6 +164,7 @@ public class TripFragment extends Fragment {
                     destinationInputLayout.setError(null);
                     destinationInputLayout.setErrorEnabled(false);
                 }
+
                 // Validate Notes
                 if (notesEditText.getText() == null || notesEditText.getText().toString().isEmpty()) {
                     notesInputLayout.setError("Notes cannot be empty");
@@ -129,6 +174,7 @@ public class TripFragment extends Fragment {
                     notesInputLayout.setError(null);
                     notesInputLayout.setErrorEnabled(false);
                 }
+
                 // Validate Travel Expenses
                 String travelEx = travelExEditText.getText() != null ? travelExEditText.getText().toString() : "";
                 if (travelEx.isEmpty()) {
@@ -160,6 +206,7 @@ public class TripFragment extends Fragment {
                         isValid = false;
                     }
                 }
+
                 // Validate Meal Expenses
                 String mealEx = mealExEditText.getText() != null ? mealExEditText.getText().toString() : "";
                 if (mealEx.isEmpty()) {
@@ -176,7 +223,7 @@ public class TripFragment extends Fragment {
                     }
                 }
 
-                // If all fields are valid, proceed with calculation logic
+                // If all fields are valid, proceed with activities and final calculations
                 if (isValid) {
                     totalExpenses = travelExpenses + customExpenses + mealExpenses;
 
@@ -209,7 +256,42 @@ public class TripFragment extends Fragment {
         });
 
         saveButton.setOnClickListener(v -> {
+            dbHelper.addTrip(
+                    destination,
+                    startEditText.getText().toString(),
+                    endEditText.getText().toString(),
+                    String.join(", ", activities),
+                    travelExpenses,
+                    customExpenses,
+                    mealExpenses,
+                    notes,
+                    userEmail
+            );
 
+            Toast.makeText(getActivity(), "Trip saved", Toast.LENGTH_SHORT).show();
+
+            startEditText.setText("");
+            endEditText.setText("");
+            destinationEditText.setText("");
+            notesEditText.setText("");
+            travelExEditText.setText("");
+            customExEditText.setText("");
+            mealExEditText.setText("");
+            hiking.setChecked(false);
+            bus.setChecked(false);
+            sightseeing.setChecked(false);
+            museum.setChecked(false);
+            resultTextView.setText("Estimated Expenses:\n");
+            activities.clear();
+            totalExpenses = 0;
+            travelExpenses = 0;
+            customExpenses = 0;
+            mealExpenses = 0;
+            activitiesExpenses = 0;
+            destination = "";
+            notes = "";
+            startDate = null;
+            endDate = null;
 
 
 
@@ -248,8 +330,6 @@ public class TripFragment extends Fragment {
 //            return insets;
 //        });
 
-
-        // Only use TextWatcher for immediate feedback
         android.text.TextWatcher disableSaveTextWatcher = new android.text.TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}

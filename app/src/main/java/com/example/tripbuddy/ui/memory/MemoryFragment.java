@@ -1,6 +1,11 @@
 package com.example.tripbuddy.ui.memory;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.example.tripbuddy.DatabaseHelper;
+import com.example.tripbuddy.MainActivity;
 import com.example.tripbuddy.ui.memory.MemoryViewModel;
 import com.example.tripbuddy.R;
 import com.google.android.material.datepicker.MaterialDatePicker;
@@ -8,6 +13,8 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -42,6 +49,10 @@ public class MemoryFragment extends Fragment {
 
     private Button imageButton, songButton, saveButton;
 
+    private Uri selectedImageUri, selectedSongUri;
+
+    private ActivityResultLauncher<String> imagePickerLauncher, songPickerLauncher;
+
     public static MemoryFragment newInstance() {
         return new MemoryFragment();
     }
@@ -60,6 +71,7 @@ public class MemoryFragment extends Fragment {
         titleEditText = view.findViewById(R.id.edtTitle);
         descriptionEditText = view.findViewById(R.id.edtNotes);
         dateInputLayout = view.findViewById(R.id.inputLayoutDate);
+        descriptionInputLayout = view.findViewById(R.id.inputLayoutDescription);
         imageButton = view.findViewById(R.id.btnUploadImage);
         songButton = view.findViewById(R.id.btnUploadSong);
         saveButton = view.findViewById(R.id.btnSave);
@@ -69,8 +81,6 @@ public class MemoryFragment extends Fragment {
         txtImage.setVisibility(View.INVISIBLE);
         txtSong.setVisibility(View.INVISIBLE);
 
-//        locationInputLayout = view.findViewById(R.id.inputLayoutLocation);
-//        descriptionInputLayout = view.findViewById(R.id.inputLayoutDescription);
 
         dateEditText.setOnClickListener(v -> {
             MaterialDatePicker<Long> startDatePicker = MaterialDatePicker.Builder.datePicker()
@@ -85,44 +95,111 @@ public class MemoryFragment extends Fragment {
         });
 
 
+        // Register image picker launcher
+        imagePickerLauncher = registerForActivityResult(
+            new ActivityResultContracts.GetContent(),
+            uri -> {
+                if (uri != null) {
+                    selectedImageUri = uri;
+                    txtImage.setVisibility(View.VISIBLE);
+                    Toast.makeText(getActivity(), "Image uploaded", Toast.LENGTH_SHORT).show();
+                }
+            }
+        );
+
         imageButton.setOnClickListener(v -> {
-            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            intent.setType("image/*"); // TODO: Replace this deprecated method
-            startActivityForResult(intent, 100);
+            imagePickerLauncher.launch("image/*");
             txtImage.setVisibility(View.VISIBLE);
-            Toast.makeText(getActivity(), "Image uploaded", Toast.LENGTH_SHORT).show();
-                });
+        });
+
+
+        // Register song picker launcher
+        songPickerLauncher = registerForActivityResult(
+            new ActivityResultContracts.GetContent(),
+            uri -> {
+                if (uri != null) {
+                    selectedSongUri = uri;
+                    txtSong.setVisibility(View.VISIBLE);
+                    Toast.makeText(getActivity(), "Song uploaded", Toast.LENGTH_SHORT).show();
+                }
+            }
+        );
+
+        songButton.setOnClickListener(v -> {
+            songPickerLauncher.launch("audio/mpeg");
+        });
+
 
         saveButton.setOnClickListener(v -> {
-            Toast.makeText(getActivity(), date.toString(), Toast.LENGTH_SHORT).show();
-//            title = titleEditText.getText().toString().trim();
-//            description = descriptionEditText.getText().toString().trim();
-//            if (dateEditText.getText().toString().isEmpty()) {
-//                dateInputLayout.setError("Date is required");
-//            } else {
-//                dateInputLayout.setError(null);
-//            }
-//            if (title.isEmpty()) {
-//                titleEditText.setError("Title is required");
-//            } else {
-//                titleEditText.setError(null);
-//            }
-//            if (description.isEmpty()) {
-//                descriptionEditText.setError("Description is required");
-//            } else {
-//                descriptionEditText.setError(null);
-//            }
-//            if (!dateEditText.getText().toString().isEmpty() && !title.isEmpty() && !description.isEmpty()) {
-//                Toast.makeText(getActivity(), "Memory saved", Toast.LENGTH_SHORT).show();
-//                // Save memory to database
-//                mViewModel.insertMemory(dateEditText.getText().toString(), title, description);
-//                // Clear fields
-//                dateEditText.setText("");
-//                titleEditText.setText("");
-//                descriptionEditText.setText("");
-//            } else {
-//                Toast.makeText(getActivity(), "Please fill all fields", Toast.LENGTH_SHORT).show();
-//            }
+            // Validate fields
+            title = titleEditText.getText().toString().trim();
+            description = descriptionEditText.getText().toString().trim();
+            String dateStr = dateEditText.getText().toString().trim();
+            String imageUriStr = selectedImageUri != null ? selectedImageUri.toString() : "";
+            String songUriStr = selectedSongUri != null ? selectedSongUri.toString() : "";
+
+            boolean valid = true;
+
+            if (dateStr.isEmpty()) {
+                dateInputLayout.setError("Date is required");
+                valid = false;
+                return;
+            } else {
+                dateInputLayout.setError(null);
+            }
+
+            if (title.isEmpty()) {
+                titleEditText.setError("Title is required");
+                valid = false;
+                return;
+            } else {
+                titleEditText.setError(null);
+            }
+
+            if (description.isEmpty()) {
+                descriptionEditText.setError("Description is required");
+                valid = false;
+                return;
+            } else {
+                descriptionEditText.setError(null);
+            }
+
+            if (imageUriStr.isEmpty()) {
+                txtImage.setError("Image is required");
+                valid = false;
+                return;
+            } else {
+                txtImage.setError(null);
+            }
+
+            if (songUriStr.isEmpty()) {
+                txtSong.setError("Song is required");
+                valid = false;
+                return;
+            } else {
+                txtSong.setError(null);
+            }
+
+            if (valid) {
+
+                SharedPreferences prefs = getActivity().getSharedPreferences(MainActivity.SHARED_PREFS, getActivity().MODE_PRIVATE);
+                String userEmail = prefs.getString(com.example.tripbuddy.MainActivity.KEY_EMAIL, "");
+
+                DatabaseHelper dbHelper = new DatabaseHelper(getActivity());
+                dbHelper.addMemory(title, description, dateStr, imageUriStr, songUriStr, userEmail);
+                Toast.makeText(getActivity(), "Memory saved", Toast.LENGTH_SHORT).show();
+
+                // Clear fields
+                dateEditText.setText("");
+                titleEditText.setText("");
+                descriptionEditText.setText("");
+                txtImage.setVisibility(View.INVISIBLE);
+                txtSong.setVisibility(View.INVISIBLE);
+                selectedImageUri = null;
+                selectedSongUri = null;
+            } else {
+                Toast.makeText(getActivity(), "Please fill all fields", Toast.LENGTH_SHORT).show();
+            }
         });
 
 

@@ -73,6 +73,7 @@
                 android:background="@drawable/edittext_rounded"
                 android:fontFamily="@font/inter_18pt_light"
                 android:inputType="textEmailAddress"
+                android:text="andre.joubert99@gmail.com"
                 android:padding="16dp"
                 android:textSize="16sp"
                 android:textColor="@color/white"
@@ -86,6 +87,8 @@
             android:layout_height="wrap_content"
             app:passwordToggleEnabled="true"
             app:hintTextColor="@color/white"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:hint="Password"
             android:layout_marginBottom="15dp">
 
 
@@ -96,7 +99,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/edittext_rounded"
                 android:fontFamily="@font/inter_18pt_light"
-                android:hint="Password"
+                android:text="1234556"
                 android:inputType="textPassword"
                 app:endIconMode="password_toggle"
                 android:padding="16dp"
@@ -124,6 +127,7 @@
                 android:background="@drawable/edittext_rounded"
                 android:fontFamily="@font/inter_18pt_light"
                 android:inputType="phone"
+                android:text="0715963507"
                 android:padding="16dp"
                 android:textColor="#212121"
                 android:textSize="16sp"
@@ -150,6 +154,7 @@
                 android:fontFamily="@font/inter_18pt_light"
                 android:inputType="number"
                 android:padding="16dp"
+                android:text="20"
                 android:textColor="#212121"
                 android:textColorHint="@color/gray_400"
                 android:textSize="16sp"
@@ -158,6 +163,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <CheckBox
+            android:id="@+id/checkRememberMe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Keep me logged in"

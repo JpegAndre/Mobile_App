@@ -3,12 +3,17 @@ package com.example.tripbuddy;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.util.TypedValue;
 import android.widget.Button;
+import android.widget.CheckBox;
+
+import com.example.tripbuddy.MainActivity;
+
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,13 +24,21 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 public class Registration extends AppCompatActivity {
 
     private Button btnRegister, btnLogin;
 
+    private CheckBox rememberMeCheckBox;
+
     private TextInputLayout emailInputLayout, passwordInputLayout, phoneInputLayout, ageInputLayout;
 
     private TextInputEditText emailEditText, passwordEditText, phoneEditText, ageEditText;
+
+    private SharedPreferences loginPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,19 +51,30 @@ public class Registration extends AppCompatActivity {
             return insets;
         });
 
-        TextInputEditText edtEmail = findViewById(R.id.edtEmail);
-        TextInputEditText edtPassword = findViewById(R.id.edtPassword);
-        TextInputEditText edtPhone = findViewById(R.id.edtPhone);
-        TextInputEditText edtAge = findViewById(R.id.edtAge);
-        TextInputLayout inputLayoutEmail = findViewById(R.id.inputLayoutEmail);
-        TextInputLayout inputLayoutPassword = findViewById(R.id.inputLayoutPassword);
-        TextInputLayout inputLayoutPhone = findViewById(R.id.inputLayoutPhone);
-        TextInputLayout inputLayoutAge = findViewById(R.id.inputLayoutAge);
 
-        setupEditTextAnimation(edtEmail);
-        setupEditTextAnimation(edtPassword);
-        setupEditTextAnimation(edtPhone);
-        setupEditTextAnimation(edtAge);
+        loginPreferences = getSharedPreferences(MainActivity.SHARED_PREFS, MODE_PRIVATE);
+//        SharedPreferences.Editor editor = loginPreferences.edit();
+//        editor.putString(KEY_EMAIL, email);
+//        editor.putString(KEY_PASSWORD, hashedPassword);
+//        editor.putBoolean(KEY_ISLOGGEDIN, true);
+//        editor.apply();
+//        startActivity(new Intent(MainActivity.this, HomeActivity.class));
+
+        emailEditText = findViewById(R.id.edtEmail);
+        passwordEditText= findViewById(R.id.edtPassword);
+        phoneEditText= findViewById(R.id.edtPhone);
+        ageEditText= findViewById(R.id.edtAge);
+        emailInputLayout = findViewById(R.id.inputLayoutEmail);
+        passwordInputLayout= findViewById(R.id.inputLayoutPassword);
+        phoneInputLayout= findViewById(R.id.inputLayoutPhone);
+        ageInputLayout= findViewById(R.id.inputLayoutAge);
+
+        rememberMeCheckBox = findViewById(R.id.checkRememberMe);
+
+        setupEditTextAnimation(emailEditText);
+        setupEditTextAnimation(passwordEditText);
+        setupEditTextAnimation(phoneEditText);
+        setupEditTextAnimation(ageEditText);
 
         btnRegister = findViewById(R.id.btnRegister);
         btnLogin = findViewById(R.id.btnLogin);
@@ -60,19 +84,20 @@ public class Registration extends AppCompatActivity {
         String password = receiveLogin.getStringExtra("password");
 
         if (email != null) {
-            edtEmail.setText(email);
+            emailEditText.setText(email);
         }
 
         if (password != null) {
-            edtPassword.setText(password);
+            passwordEditText.setText(password);
         }
 
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Registration.this, MainActivity.class));
                 handleRegistration();
+//                startActivity(new Intent(Registration.this, MainActivity.class));
+
             }
         });
 
@@ -88,7 +113,14 @@ public class Registration extends AppCompatActivity {
         String email = emailEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString().trim();
         String phone = phoneEditText.getText().toString().trim();
-        int age = Integer.parseInt(ageEditText.getText().toString().trim());
+        int age;
+
+        try {
+            age = Integer.parseInt(ageEditText.getText().toString().trim());
+        } catch (NumberFormatException e) {
+            ageInputLayout.setError("Enter a valid age");
+            return;
+        }
 
         if (email.isEmpty()) {
             emailInputLayout.setError("Email cannot be empty");
@@ -133,12 +165,59 @@ public class Registration extends AppCompatActivity {
             ageInputLayout.setErrorEnabled(false);
         }
 
-        // TODO: Validate there doesn't exist such login and then create user
+        String hashedPassword = hashValue(password);
+
+        DatabaseHelper dbHelper = new DatabaseHelper(this);
+        boolean userExists = dbHelper.checkUser(email, hashedPassword);
+
+        if (!userExists){
+            dbHelper.addUser(email, hashedPassword, phone, age);
+
+
+            SharedPreferences.Editor editor = loginPreferences.edit();
+            editor.putString(MainActivity.KEY_EMAIL, email);
+            editor.putString(MainActivity.KEY_PASSWORD, hashedPassword);
+
+                if (rememberMeCheckBox.isChecked()) {
+                    editor.putBoolean(MainActivity.KEY_ISLOGGEDIN, true);
+                } else {
+                    editor.putBoolean(MainActivity.KEY_ISLOGGEDIN, false);
+                }
+
+            editor.apply();
+            startActivity(new Intent(this, HomeActivity.class));
+        } else {
+            emailInputLayout.setError("User already exists with this email");
+            return;
+        }
 
         System.out.println("Email: " + email);
         System.out.println("Password: " + password);
         System.out.println("Phone: " + phone);
         System.out.println("Age: " + age);
+    }
+
+    public static String hashValue(String input) {
+        try {
+            // Create MessageDigest instance for SHA-256
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+
+            // Apply hash function to the input bytes
+            byte[] hashBytes = digest.digest(input.getBytes(StandardCharsets.UTF_8));
+
+            // Convert bytes to hexadecimal format
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : hashBytes) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) hexString.append('0');
+                hexString.append(hex);
+            }
+
+            return hexString.toString();
+
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("Error: SHA-256 algorithm not found", e);
+        }
     }
 
     private void setupEditTextAnimation(TextInputEditText editText) {
