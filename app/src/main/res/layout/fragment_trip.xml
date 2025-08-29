@@ -31,7 +31,6 @@
             android:padding="16dp"
             android:text="Plan a Trip"
             android:fontFamily="@font/inter_18pt_bold"
-            android:textColor="@color/black"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -148,34 +147,35 @@
                         android:layout_height="wrap_content"
                         android:text="Select activities:"
                         android:fontFamily="@font/inter_18pt_bold"
-                        android:textColor="@color/black"
                         android:textSize="16sp"
                         />
 
-                    <RadioGroup
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+
 
                         <CheckBox
+                            android:id="@+id/checkHiking"
                             android:layout_width="wrap_content"
                             android:layout_height="30dp"
                             android:text="Hiking"/>
 
                         <CheckBox
+                            android:id="@+id/checkBus"
                             android:layout_width="wrap_content"
                             android:layout_height="30dp"
                             android:text="Bus ride"/>
 
                         <CheckBox
+                            android:id="@+id/checkSightseeing"
                             android:layout_width="wrap_content"
                             android:layout_height="30dp"
                             android:text="Sightseeing"/>
 
                         <CheckBox
+                            android:id="@+id/checkMuseum"
                             android:layout_width="wrap_content"
                             android:layout_height="30dp"
                             android:text="Museum"/>
-                    </RadioGroup>
+
                 </LinearLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -196,7 +196,6 @@
                         android:fontFamily="@font/inter_18pt_light"
                         android:paddingVertical="10dp"
                         android:textSize="15sp"
-                        android:textColor="@color/black"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -205,27 +204,34 @@
             </LinearLayout>
 
 
-
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edtNotes"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputLayoutNotes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textMultiLine"
-                android:gravity="top|start"
-                android:scrollHorizontally="false"
-                android:minLines="1"
-                android:maxLines="5"
-                android:overScrollMode="ifContentScrolls"
-                android:scrollbars="vertical"
-                android:background="@drawable/edittext_home"
                 android:hint="Trip notes"
-                android:fontFamily="@font/inter_18pt_light"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_marginVertical="10dp"
-                android:padding="10dp"
-                android:textSize="15sp"
-                android:textColor="@color/black"
-                />
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:gravity="top|start"
+                    android:scrollHorizontally="false"
+                    android:id="@+id/edtNotes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:minLines="1"
+                    android:maxLines="5"
+                    android:overScrollMode="ifContentScrolls"
+                    android:scrollbars="vertical"
+                    android:background="@drawable/edittext_home"
+                    android:fontFamily="@font/inter_18pt_light"
+                    android:padding="10dp"
+                    android:textSize="15sp"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -344,7 +350,7 @@
                 android:layout_weight="1"/>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnSubmit"
+                android:id="@+id/btnSave"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button_shape"
