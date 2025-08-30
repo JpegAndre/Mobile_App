@@ -30,7 +30,6 @@ public class Trip {
         this.email = email;
     }
 
-    // Calculate if this trip had a discount (based on trip position for this user)
     public boolean hadDiscount(Context context) {
         DatabaseHelper dbHelper = new DatabaseHelper(context);
 
@@ -84,7 +83,6 @@ public class Trip {
     public double getFinalTotal(Context context) {
         return getTotalExpenses() - getDiscountAmount(context);
     }
-
     public static List<Trip> getTripsForUser(Context context, String email) {
         List<Trip> trips = new ArrayList<>();
         DatabaseHelper dbHelper = new DatabaseHelper(context);

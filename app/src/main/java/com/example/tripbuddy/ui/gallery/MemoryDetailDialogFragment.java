@@ -51,7 +51,6 @@ public class MemoryDetailDialogFragment extends DialogFragment {
         super.onCreate(savedInstanceState);
         setStyle(DialogFragment.STYLE_NORMAL, R.style.Theme_TripBuddy);
 
-        // Reconstruct memory object from arguments
         Bundle args = getArguments();
         if (args != null) {
             memory = new Memory(

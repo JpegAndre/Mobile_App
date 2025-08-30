@@ -230,8 +230,6 @@ public class Registration extends AppCompatActivity {
         float focusedRadiusPx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 15, getResources().getDisplayMetrics());
         int focusedStrokeWidthPx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, getResources().getDisplayMetrics());
         int focusedStrokeColor = Color.parseColor("#4285F4");
-        // Assuming the background color of the EditText itself doesn't change, only corners and stroke
-        // If the solid color also needs to change, that can be added to the animator too.
 
         editText.setOnFocusChangeListener((v, hasFocus) -> {
             GradientDrawable background = (GradientDrawable) editText.getBackground().mutate();
@@ -246,8 +244,7 @@ public class Registration extends AppCompatActivity {
                 background.setCornerRadius(animatedValue);
             });
 
-            // For stroke width, it's an int. If your drawable has getStrokeWidth() (API 24+ for GradientDrawable)
-            // We'll animate from current to target. For simplicity, we assume we know the start based on focus state.
+
             int startStrokeWidth = hasFocus ? defaultStrokeWidthPx : focusedStrokeWidthPx; 
             int endStrokeWidth = hasFocus ? focusedStrokeWidthPx : defaultStrokeWidthPx;
             
@@ -257,9 +254,7 @@ public class Registration extends AppCompatActivity {
                 background.setStroke((int) animation.getAnimatedValue(), background.getColor() != null ? background.getColor().getDefaultColor() : (hasFocus ? focusedStrokeColor: defaultStrokeColor) );
             });
 
-            // For stroke color
-            // We need to get the current stroke color. GradientDrawable doesn't have a direct getter pre-API 29.
-            // We'll animate from current to target, assuming we know the start based on focus state.
+
             int startStrokeColor = hasFocus ? defaultStrokeColor : focusedStrokeColor;
             int endStrokeColor = hasFocus ? focusedStrokeColor : defaultStrokeColor;
 

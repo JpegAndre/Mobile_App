@@ -29,7 +29,6 @@ public class Memory {
         DatabaseHelper dbHelper = new DatabaseHelper(context);
         android.database.Cursor cursor = null;
 
-        // Normalize email for comparison (trim and lowercase)
         String normalizedEmail = email != null ? email.trim().toLowerCase() : "";
 
         // Debug logging
@@ -73,7 +72,6 @@ public class Memory {
         return memories;
     }
 
-    // Debug method to get all memories
     public static List<Memory> getAllMemories(Context context) {
         List<Memory> memories = new ArrayList<>();
         DatabaseHelper dbHelper = new DatabaseHelper(context);

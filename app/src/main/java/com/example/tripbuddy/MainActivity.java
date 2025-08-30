@@ -191,8 +191,7 @@ public class MainActivity extends AppCompatActivity {
                 background.setCornerRadius(animatedValue);
             });
 
-            // For stroke width, it's an int. If your drawable has getStrokeWidth() (API 24+ for GradientDrawable)
-            // We'll animate from current to target. For simplicity, we assume we know the start based on focus state.
+
             int startStrokeWidth = hasFocus ? defaultStrokeWidthPx : focusedStrokeWidthPx;
             int endStrokeWidth = hasFocus ? focusedStrokeWidthPx : defaultStrokeWidthPx;
 
@@ -202,9 +201,7 @@ public class MainActivity extends AppCompatActivity {
                 background.setStroke((int) animation.getAnimatedValue(), background.getColor() != null ? background.getColor().getDefaultColor() : (hasFocus ? focusedStrokeColor: defaultStrokeColor) );
             });
 
-            // For stroke color
-            // We need to get the current stroke color. GradientDrawable doesn't have a direct getter pre-API 29.
-            // We'll animate from current to target, assuming we know the start based on focus state.
+
             int startStrokeColor = hasFocus ? defaultStrokeColor : focusedStrokeColor;
             int endStrokeColor = hasFocus ? focusedStrokeColor : defaultStrokeColor;
 

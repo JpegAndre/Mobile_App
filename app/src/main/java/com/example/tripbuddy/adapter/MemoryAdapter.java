@@ -62,32 +62,32 @@ public class MemoryAdapter extends RecyclerView.Adapter<MemoryAdapter.MemoryView
         // Load image if available
         if (memory.imageUri != null && !memory.imageUri.isEmpty()) {
             try {
-                // Check if it's a file path (internal storage) or URI
+
                 if (memory.imageUri.startsWith("/")) {
-                    // It's a file path from internal storage
+
                     File imageFile = new File(memory.imageUri);
                     if (imageFile.exists()) {
                         Uri fileUri = Uri.fromFile(imageFile);
                         holder.imageMemory.setImageURI(fileUri);
                         holder.imageMemory.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     } else {
-                        // File doesn't exist, show placeholder
+
                         holder.imageMemory.setImageResource(R.color.gray_300);
                         android.util.Log.w("MemoryAdapter", "Image file not found: " + memory.imageUri);
                     }
                 } else {
-                    // It's a URI (for backward compatibility with old data)
+
                     Uri imageUri = Uri.parse(memory.imageUri);
                     holder.imageMemory.setImageURI(imageUri);
                     holder.imageMemory.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 }
             } catch (Exception e) {
-                // If image loading fails, show placeholder
+
                 holder.imageMemory.setImageResource(R.color.gray_300);
                 android.util.Log.e("MemoryAdapter", "Error loading image: " + e.getMessage());
             }
         } else {
-            // Show placeholder if no image
+
             holder.imageMemory.setImageResource(R.color.gray_300);
         }
 
@@ -103,12 +103,12 @@ public class MemoryAdapter extends RecyclerView.Adapter<MemoryAdapter.MemoryView
                 holder.btnPause.setVisibility(View.GONE);
             }
 
-            // Play button click listener (prevent card click when clicking play)
+
             holder.btnPlay.setOnClickListener(v -> {
                 playAudio(memory.songUri, holder);
             });
 
-            // Pause button click listener (prevent card click when clicking pause)
+
             holder.btnPause.setOnClickListener(v -> {
                 pauseAudio(holder);
             });
@@ -129,14 +129,14 @@ public class MemoryAdapter extends RecyclerView.Adapter<MemoryAdapter.MemoryView
                 currentMediaPlayer.release();
                 currentMediaPlayer = null;
 
-                // Reset previous holder buttons
+
                 if (currentPlayingHolder != null) {
                     currentPlayingHolder.btnPlay.setVisibility(View.VISIBLE);
                     currentPlayingHolder.btnPause.setVisibility(View.GONE);
                 }
             }
 
-            // Start new audio
+
             currentMediaPlayer = new MediaPlayer();
             currentMediaPlayer.setDataSource(holder.itemView.getContext(), Uri.parse(audioUri));
             currentMediaPlayer.prepareAsync();
