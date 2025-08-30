@@ -49,12 +49,21 @@ public class Trips extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences(MainActivity.SHARED_PREFS, MODE_PRIVATE);
         String userEmail = prefs.getString(MainActivity.KEY_EMAIL, "");
 
+
+        // Call database debugging method to examine raw database contents
+        DatabaseHelper dbHelper = new DatabaseHelper(this);
+        dbHelper.getAllTripsDebug();
+
         tripList = Trip.getTripsForUser(this, userEmail);
+
+
+
         tripAdapter = new TripAdapter(tripList);
         recyclerTrips.setAdapter(tripAdapter);
 
         if (tripList.isEmpty()) {
             textNoTrips.setVisibility(View.VISIBLE);
+            textNoTrips.setText("No trips found for: " + userEmail);
             recyclerTrips.setVisibility(View.GONE);
         } else {
             textNoTrips.setVisibility(View.GONE);
@@ -67,5 +76,6 @@ public class Trips extends AppCompatActivity {
                 startActivity(new Intent(Trips.this, HomeActivity.class));
             }
         });
+
     }
 }

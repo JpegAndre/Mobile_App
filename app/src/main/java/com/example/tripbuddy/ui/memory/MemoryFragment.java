@@ -30,9 +30,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.UUID;
 
 public class MemoryFragment extends Fragment {
 
@@ -81,6 +85,8 @@ public class MemoryFragment extends Fragment {
         txtImage.setVisibility(View.INVISIBLE);
         txtSong.setVisibility(View.INVISIBLE);
 
+        SharedPreferences prefs = getActivity().getSharedPreferences(MainActivity.SHARED_PREFS, getActivity().MODE_PRIVATE);
+        String userEmail = prefs.getString(MainActivity.KEY_EMAIL, "");
 
         dateEditText.setOnClickListener(v -> {
             MaterialDatePicker<Long> startDatePicker = MaterialDatePicker.Builder.datePicker()
@@ -101,7 +107,6 @@ public class MemoryFragment extends Fragment {
             uri -> {
                 if (uri != null) {
                     selectedImageUri = uri;
-                    txtImage.setVisibility(View.VISIBLE);
                     Toast.makeText(getActivity(), "Image uploaded", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -119,7 +124,6 @@ public class MemoryFragment extends Fragment {
             uri -> {
                 if (uri != null) {
                     selectedSongUri = uri;
-                    txtSong.setVisibility(View.VISIBLE);
                     Toast.makeText(getActivity(), "Song uploaded", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -127,6 +131,7 @@ public class MemoryFragment extends Fragment {
 
         songButton.setOnClickListener(v -> {
             songPickerLauncher.launch("audio/mpeg");
+            txtSong.setVisibility(View.VISIBLE);
         });
 
 
@@ -135,8 +140,6 @@ public class MemoryFragment extends Fragment {
             title = titleEditText.getText().toString().trim();
             description = descriptionEditText.getText().toString().trim();
             String dateStr = dateEditText.getText().toString().trim();
-            String imageUriStr = selectedImageUri != null ? selectedImageUri.toString() : "";
-            String songUriStr = selectedSongUri != null ? selectedSongUri.toString() : "";
 
             boolean valid = true;
 
@@ -164,7 +167,7 @@ public class MemoryFragment extends Fragment {
                 descriptionEditText.setError(null);
             }
 
-            if (imageUriStr.isEmpty()) {
+            if (selectedImageUri == null) {
                 txtImage.setError("Image is required");
                 valid = false;
                 return;
@@ -172,7 +175,7 @@ public class MemoryFragment extends Fragment {
                 txtImage.setError(null);
             }
 
-            if (songUriStr.isEmpty()) {
+            if (selectedSongUri == null) {
                 txtSong.setError("Song is required");
                 valid = false;
                 return;
@@ -181,28 +184,65 @@ public class MemoryFragment extends Fragment {
             }
 
             if (valid) {
+                // Copy files to internal storage
+                String savedImagePath = copyFileToInternalStorage(selectedImageUri, "image_");
+                String savedSongPath = copyFileToInternalStorage(selectedSongUri, "song_");
 
-                SharedPreferences prefs = getActivity().getSharedPreferences(MainActivity.SHARED_PREFS, getActivity().MODE_PRIVATE);
-                String userEmail = prefs.getString(com.example.tripbuddy.MainActivity.KEY_EMAIL, "");
+                if (savedImagePath != null && savedSongPath != null) {
 
-                DatabaseHelper dbHelper = new DatabaseHelper(getActivity());
-                dbHelper.addMemory(title, description, dateStr, imageUriStr, songUriStr, userEmail);
-                Toast.makeText(getActivity(), "Memory saved", Toast.LENGTH_SHORT).show();
+                    DatabaseHelper dbHelper = new DatabaseHelper(getActivity());
+                    dbHelper.addMemory(title, description, dateStr, savedImagePath, savedSongPath, userEmail);
+                    Toast.makeText(getActivity(), "Memory saved", Toast.LENGTH_SHORT).show();
 
-                // Clear fields
-                dateEditText.setText("");
-                titleEditText.setText("");
-                descriptionEditText.setText("");
-                txtImage.setVisibility(View.INVISIBLE);
-                txtSong.setVisibility(View.INVISIBLE);
-                selectedImageUri = null;
-                selectedSongUri = null;
+                    // Clear fields
+                    dateEditText.setText("");
+                    titleEditText.setText("");
+                    descriptionEditText.setText("");
+                    txtImage.setVisibility(View.INVISIBLE);
+                    txtSong.setVisibility(View.INVISIBLE);
+                    selectedImageUri = null;
+                    selectedSongUri = null;
+                } else {
+                    Toast.makeText(getActivity(), "Error saving files. Please try again.", Toast.LENGTH_SHORT).show();
+                }
             } else {
                 Toast.makeText(getActivity(), "Please fill all fields", Toast.LENGTH_SHORT).show();
             }
         });
-
-
     }
 
+    private String copyFileToInternalStorage(Uri sourceUri, String prefix) {
+        try {
+            // Create a unique filename
+            String fileName = prefix + UUID.randomUUID().toString();
+
+            // Get the app's internal storage directory
+            File internalDir = new File(getActivity().getFilesDir(), "memories");
+            if (!internalDir.exists()) {
+                internalDir.mkdirs();
+            }
+
+            File destFile = new File(internalDir, fileName);
+
+            // Copy the file
+            InputStream inputStream = getActivity().getContentResolver().openInputStream(sourceUri);
+            FileOutputStream outputStream = new FileOutputStream(destFile);
+
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = inputStream.read(buffer)) > 0) {
+                outputStream.write(buffer, 0, length);
+            }
+
+            outputStream.close();
+            inputStream.close();
+
+            android.util.Log.d("MemoryFragment", "File saved to: " + destFile.getAbsolutePath());
+            return destFile.getAbsolutePath();
+
+        } catch (Exception e) {
+            android.util.Log.e("MemoryFragment", "Error copying file: " + e.getMessage());
+            return null;
+        }
+    }
 }

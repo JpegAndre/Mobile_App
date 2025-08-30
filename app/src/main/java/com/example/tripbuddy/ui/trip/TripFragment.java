@@ -46,11 +46,13 @@ public class TripFragment extends Fragment {
 
     private View scrollView;
 
-    private double travelExpenses, customExpenses, mealExpenses, totalExpenses, activitiesExpenses;
+    private double travelExpenses, customExpenses, mealExpenses, totalExpenses, activitiesExpenses, discountAmount;
 
     private SimpleDateFormat startDate, endDate;
 
     ArrayList<String> activities = new ArrayList<>();
+
+    private boolean qualifiesForDiscount = false;
 
 
     @Override
@@ -225,6 +227,12 @@ public class TripFragment extends Fragment {
 
                 // If all fields are valid, proceed with activities and final calculations
                 if (isValid) {
+                    // Check if user qualifies for discount (has 3 or more previous trips)
+                    int previousTripCount = dbHelper.getTripCountForUser(userEmail);
+                    qualifiesForDiscount = previousTripCount >= 3;
+
+                    //android.util.Log.d("TripFragment", "User has " + previousTripCount + " previous trips. Qualifies for discount: " + qualifiesForDiscount);
+
                     totalExpenses = travelExpenses + customExpenses + mealExpenses;
 
                     if (hiking.isChecked()) {
@@ -246,7 +254,33 @@ public class TripFragment extends Fragment {
 
                     totalExpenses += activitiesExpenses;
 
-                    String temp = "Travel expenses - R " + travelExpenses + "\nActivity expenses - R " + activitiesExpenses + "\nCustom expenses - R " + customExpenses + "\nMeal expenses - R " + mealExpenses + "\n --------------------- \nTotal expenses - R " + totalExpenses;
+                    // Apply 10% discount if qualified
+                    String discountText;
+                    double finalTotal;
+                    if (qualifiesForDiscount) {
+                        discountAmount = totalExpenses * 0.10; // 10% discount
+                        finalTotal = totalExpenses - discountAmount;
+                        discountText = "R " + String.format("%.2f", discountAmount) + " (10% off - 4th trip bonus!)";
+
+                        Toast.makeText(getActivity(), "Congratulations! You qualify for a 10% discount on this trip!", Toast.LENGTH_LONG).show();
+                    } else {
+                        discountAmount = 0;
+                        finalTotal = totalExpenses;
+                        int tripsNeeded = 3 - previousTripCount;
+                        if (tripsNeeded > 0) {
+                            discountText = "Save " + tripsNeeded + " more trip(s) to unlock 10% discount!";
+                        } else {
+                            discountText = "N/A";
+                        }
+                    }
+
+                    String temp = "Travel expenses - R " + String.format("%.2f", travelExpenses) +
+                                "\nActivity expenses - R " + String.format("%.2f", activitiesExpenses) +
+                                "\nCustom expenses - R " + String.format("%.2f", customExpenses) +
+                                "\nMeal expenses - R " + String.format("%.2f", mealExpenses) +
+                                "\n --------------------- " +
+                                "\nDiscount - " + discountText +
+                                "\nTotal expenses - R " + String.format("%.2f", finalTotal);
 
                     resultTextView.setText(temp);
 
@@ -270,6 +304,7 @@ public class TripFragment extends Fragment {
 
             Toast.makeText(getActivity(), "Trip saved", Toast.LENGTH_SHORT).show();
 
+            // Clear fields and reset variables
             startEditText.setText("");
             endEditText.setText("");
             destinationEditText.setText("");
@@ -281,18 +316,19 @@ public class TripFragment extends Fragment {
             bus.setChecked(false);
             sightseeing.setChecked(false);
             museum.setChecked(false);
-            resultTextView.setText("Estimated Expenses:\n");
+            resultTextView.setText("Travel expenses - $ \nActivity expenses - $ \nCustom expenses - $ \nMeal expenses - $ \n --------------------- \nDiscount - N/A\nTotal estimated cost - $");
             activities.clear();
             totalExpenses = 0;
             travelExpenses = 0;
             customExpenses = 0;
             mealExpenses = 0;
             activitiesExpenses = 0;
+            discountAmount = 0;
+            qualifiesForDiscount = false;
             destination = "";
             notes = "";
             startDate = null;
             endDate = null;
-
 
 
             saveButton.setEnabled(false);

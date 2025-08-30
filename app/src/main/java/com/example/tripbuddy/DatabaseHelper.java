@@ -6,10 +6,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "tripbuddy.db";
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 6;
 
     public static final String TABLE_USERS = "users";
     public static final String COLUMN_EMAIL = "email";
@@ -138,5 +141,46 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         boolean exists = cursor.getCount() > 0;
         cursor.close();
         return exists;
+    }
+
+    // Get trip count for a user
+    public int getTripCountForUser(String email) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selection = COLUMN_TRIP_EMAIL + "=?";
+        String[] selectionArgs = { email };
+        Cursor cursor = db.query(TABLE_TRIPS, null, selection, selectionArgs, null, null, null);
+        int count = cursor.getCount();
+        cursor.close();
+        android.util.Log.d("DatabaseHelper", "Trip count for " + email + ": " + count);
+        return count;
+    }
+
+    // Debug method to get all trips from database
+    public List<android.database.Cursor> getAllTripsDebug() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        android.util.Log.d("DatabaseHelper", "=== DATABASE DEBUG INFO ===");
+
+        // Check if trips table exists
+        Cursor tableCheck = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='" + TABLE_TRIPS + "'", null);
+        android.util.Log.d("DatabaseHelper", "Trips table exists: " + (tableCheck.getCount() > 0));
+        tableCheck.close();
+
+        // Get all trips with raw query for debugging
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_TRIPS, null);
+        android.util.Log.d("DatabaseHelper", "Total trips in database: " + cursor.getCount());
+
+        if (cursor.moveToFirst()) {
+            do {
+                StringBuilder tripInfo = new StringBuilder("Trip: ");
+                for (int i = 0; i < cursor.getColumnCount(); i++) {
+                    tripInfo.append(cursor.getColumnName(i)).append("='")
+                           .append(cursor.getString(i)).append("' ");
+                }
+                android.util.Log.d("DatabaseHelper", tripInfo.toString());
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        return new ArrayList<>();
     }
 }

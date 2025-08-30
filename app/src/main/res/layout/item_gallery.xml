@@ -1,65 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="8dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
     app:cardCornerRadius="12dp"
-    app:cardElevation="6dp">
+    app:cardElevation="4dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="8dp">
+        android:orientation="vertical">
 
-        <!-- Image Preview -->
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/imageMemory"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="120dp"
             android:scaleType="centerCrop"
-            android:contentDescription="Gallery Image" />
+            android:background="@color/gray_300"
+            android:contentDescription="Memory Image" />
 
-        <!-- Music Controls -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:paddingTop="8dp">
-
-            <ImageButton
-                android:id="@+id/btnPlay"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@android:color/transparent"
-                android:src="@android:drawable/ic_media_play"
-                android:contentDescription="Play" />
-
-            <ImageButton
-                android:id="@+id/btnPause"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@android:color/transparent"
-                android:src="@android:drawable/ic_media_pause"
-                android:contentDescription="Pause" />
-
-            <SeekBar
-                android:id="@+id/seekBar"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"/>
+            android:orientation="vertical"
+            android:padding="12dp">
 
             <TextView
-                android:id="@+id/txtTime"
-                android:layout_width="wrap_content"
+                android:id="@+id/textMemoryTitle"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="0:00"
+                android:text="Memory Title"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:maxLines="1"
+                android:ellipsize="end"/>
+
+            <TextView
+                android:id="@+id/textMemoryDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Date"
+                android:textSize="12sp"
+                android:textColor="@color/gray_600"
+                android:layout_marginTop="4dp"/>
+
+            <TextView
+                android:id="@+id/textMemoryDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Description"
                 android:textSize="14sp"
-                android:paddingStart="4dp" />
+                android:textColor="@color/black"
+                android:layout_marginTop="4dp"
+                android:maxLines="2"
+                android:ellipsize="end"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:id="@+id/iconMusic"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@android:drawable/ic_media_play"
+                    android:visibility="gone"
+                    android:contentDescription="Has Audio"/>
+
+                <TextView
+                    android:id="@+id/textHasAudio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="♪ Audio"
+                    android:textSize="10sp"
+                    android:textColor="@color/gray_600"
+                    android:layout_marginStart="4dp"
+                    android:visibility="gone"/>
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+
+                <!-- Audio Control Buttons -->
+                <ImageButton
+                    android:id="@+id/btnPlay"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@android:drawable/ic_media_play"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="Play Audio"
+                    android:scaleType="centerInside"
+                    android:visibility="gone"
+                    android:padding="4dp"/>
+
+                <ImageButton
+                    android:id="@+id/btnPause"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@android:drawable/ic_media_pause"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="Pause Audio"
+                    android:scaleType="centerInside"
+                    android:visibility="gone"
+                    android:padding="4dp"/>
+
+            </LinearLayout>
+
         </LinearLayout>
 
     </LinearLayout>

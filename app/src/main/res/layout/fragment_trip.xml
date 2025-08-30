@@ -183,7 +183,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:inputType="number"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:hint="Travel Expenses"
                     >
@@ -194,6 +193,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/edittext_home"
                         android:fontFamily="@font/inter_18pt_light"
+                        android:inputType="numberDecimal"
                         android:paddingVertical="10dp"
                         android:textSize="15sp"
                         />
@@ -244,7 +244,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     android:layout_weight="1"
-                    android:inputType="number"
                     android:hint="Custom Expenses"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
@@ -254,6 +253,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/edittext_home"
                         android:fontFamily="@font/inter_18pt_light"
+                        android:inputType="numberDecimal"
                         android:padding="10dp"
                         android:textSize="15sp"
                         />
@@ -268,7 +268,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_weight="1"
-                    android:inputType="number"
                     android:hint="Meal Expenses"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
@@ -278,6 +277,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/edittext_home"
                         android:fontFamily="@font/inter_18pt_light"
+                        android:inputType="numberDecimal"
                         android:padding="10dp"
                         android:textSize="15sp"
                         />
@@ -314,7 +314,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="30dp"
             android:layout_marginVertical="10dp"
-            android:text="Travel expenses - $ \nActivity expenses - $ \nCustom expenses - $ \nMeal expenses - $ \n --------------------- \nTotal estimated cost - $"
+            android:text="Travel expenses - $ \nActivity expenses - $ \nCustom expenses - $ \nMeal expenses - $ \n --------------------- \nDiscount - N/A\nTotal estimated cost - $"
 
             app:layout_constraintBottom_toTopOf="@+id/layoutButtons"
             app:layout_constraintTop_toBottomOf="@+id/layoutEdits"/>

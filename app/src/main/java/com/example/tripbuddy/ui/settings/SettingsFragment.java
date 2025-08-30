@@ -48,11 +48,11 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                SharedPreferences loginPreferences = getActivity().getSharedPreferences("loginPrefs", getActivity().MODE_PRIVATE);
+                SharedPreferences loginPreferences = getActivity().getSharedPreferences(MainActivity.SHARED_PREFS, getActivity().MODE_PRIVATE);
                 SharedPreferences.Editor editor = loginPreferences.edit();
-                editor.putBoolean("isLoggedIn", false);
-                editor.putString("email", "");
-                editor.putString("password", "");
+                editor.putBoolean(MainActivity.KEY_ISLOGGEDIN, false);
+                editor.putString(MainActivity.KEY_EMAIL, "");
+                editor.putString(MainActivity.KEY_PASSWORD, "");
                 editor.apply();
                 startActivity(new Intent(getActivity(), MainActivity.class));
                 getActivity().finish();

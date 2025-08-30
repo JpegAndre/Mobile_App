@@ -13,7 +13,9 @@
         android:theme="@style/Theme.TripBuddy.Splash">
         <activity
             android:name=".Trips"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.TripBuddy"/>
+
         <activity
             android:name=".HomeActivity"
             android:exported="false"
