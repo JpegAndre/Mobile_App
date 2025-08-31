@@ -114,6 +114,11 @@ public class MemoryFragment extends Fragment {
 
         imageButton.setOnClickListener(v -> {
             imagePickerLauncher.launch("image/*");
+
+            if (selectedImageUri == null || selectedImageUri.toString().isEmpty()) {
+                Toast.makeText(getActivity(), "Please select an image file", Toast.LENGTH_SHORT).show();
+                return;
+            }
             txtImage.setVisibility(View.VISIBLE);
         });
 
@@ -131,6 +136,11 @@ public class MemoryFragment extends Fragment {
 
         songButton.setOnClickListener(v -> {
             songPickerLauncher.launch("audio/mpeg");
+
+            if (selectedSongUri == null || selectedSongUri.toString().isEmpty()) {
+                Toast.makeText(getActivity(), "Please select an mp3 file", Toast.LENGTH_SHORT).show();
+                return;
+            }
             txtSong.setVisibility(View.VISIBLE);
         });
 

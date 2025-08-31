@@ -36,7 +36,6 @@
             android:fontFamily="@font/inter_18pt_bold"
             android:text="No memories found"
             android:textSize="18sp"
-            android:textColor="@color/gray_600"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
